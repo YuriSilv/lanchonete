@@ -17,7 +17,7 @@ public class Produto {
     ////////////////////// MÉTODOS //////////////////////
     @Override
     public String toString(){
-        return descricao;
+        return "|| OBJETO:  "+id+"|| Descricao:  "+descricao+"|| Valor: " +valor;
     }
 
     public String getDescricao() {

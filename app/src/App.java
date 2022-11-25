@@ -12,9 +12,9 @@ public class App {
         pedidos.add(prod2);
         pedidos.add(prod1);
 
-        Pedidos p = new Pedidos(pedidos);
+        // Pedidos p = new Pedidos(pedidos);
 
-        System.out.println(prod2.toString());
-        p.mostrarPedidos();
+        System.out.println(pedidos);
+        // p.mostrarPedidos();
     }
 }
