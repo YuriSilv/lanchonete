@@ -5,14 +5,6 @@ public abstract class Usuario {
 
     ////////////////////// MÉTODOS //////////////////////
     
-    
-    
-    
-    
-    
-    
-    
-    
     /*public String getId() {
         return id;
     }
@@ -28,4 +20,5 @@ public abstract class Usuario {
     public void setNome(String nome) {
         this.nome = nome;
     }*/
+    
 }

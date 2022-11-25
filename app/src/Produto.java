@@ -1,11 +1,11 @@
+import java.util.Calendar;
+
 public class Produto {
     
     ////////////////////// ATRIBUTOS //////////////////////
     private String id;
     private String descricao;
     private float valor;
-    
-
 
     public Produto(String id, String descricao, float valor){
         setDescricao(descricao);

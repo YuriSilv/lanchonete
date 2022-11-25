@@ -1,55 +1,57 @@
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class Pedidos {
 
     ////////////////////// ATRIBUTOS //////////////////////
-    private Date dataPedido = new Date();
-    private Date dataEntrega = new Date();
-    private List produtos = new ArrayList<Produto>();
+    private Calendar dataPedido = Calendar.getInstance();
+    private Calendar dataEntrega = Calendar.getInstance();
+    private List<Produto> produtos = new ArrayList<Produto>();
     private float valor;
 
 
-    public Pedidos(List produtos){
+    public Pedidos(List<Produto> produtos){
         setProdutos(produtos);
     }
 
-
     ////////////////////// MÉTODOS //////////////////////
     public void mostrarPedidos(){
-        System.out.println(produtos.get(1));
+        System.out.println(produtos);
     }
 
-    public Date getDataEntrega() {
+    public Calendar getDataEntrega() {
         return dataEntrega;
     }
 
-    public void setDataEntrega(Date dataEntrega) {
+    public void setDataEntrega(Calendar dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
-    public Date getDataPedido() {
+    public Calendar getDataPedido() {
         return dataPedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
+    public void setDataPedido(Calendar dataPedido) {
         this.dataPedido = dataPedido;
     }
 
     public float getValor() {
-        return valor;
+        for(int i = 0; i < this.produtos.size(); i++){
+            this.valor += this.produtos.get(i).getValor();
+        }
+        return this.valor;
     }
 
     public void setValor(float valor) {
         this.valor = valor;
     }
 
-    public void setProdutos(List produtos) {
+    public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
 
-    public List getProdutos() {
+    public List<Produto> getProdutos() {
         return produtos;
     }
 }
