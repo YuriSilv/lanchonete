@@ -4,12 +4,14 @@ public class Produto {
     
     ////////////////////// ATRIBUTOS //////////////////////
     private String id;
+    private String nome;
     private String descricao;
     private float valor;
 
-    public Produto(String id, String descricao, float valor){
-        setDescricao(descricao);
+    public Produto(String id, String nome, String descricao, Float valor){
         setId(id);
+        setNome(nome);
+        setDescricao(descricao);
         setValor(valor);
     }
 
@@ -43,4 +45,19 @@ public class Produto {
     public void setValor(float valor) {
         this.valor = valor;
     }
+
+    /**
+     * @return String return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
 }

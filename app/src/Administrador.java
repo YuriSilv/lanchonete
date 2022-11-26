@@ -1,8 +1,8 @@
 public class Administrador extends Funcionario{
 
-    private final String nivelAcesso = "1";
+    private static final String nivelAcesso = "2";
 
-    public Administrador(String name, String cpf){
-        super(name, cpf);
+    public Administrador(String name, String cpf, String nivelAcessoExtra){
+        super(name, cpf, nivelAcesso+nivelAcessoExtra);
     }
 }

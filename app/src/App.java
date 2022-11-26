@@ -16,15 +16,23 @@ public class App {
         sistema.CadastrarCliente("Yuri", "123","38988047122", "Diamantina-MG");
         sistema.CadastrarCliente("Yuri", "123","38988047122", "Diamantina-MG");
         sistema.CadastrarCliente("Juan", "451","38988521562", "Acre-MG");*/
-        Calendar tempo = Calendar.getInstance();
-        System.out.println(tempo.get(Calendar.HOUR_OF_DAY));
-        List<Produto> lista= new ArrayList<Produto>();
-        Pedidos p1 = new Pedidos(lista);
-        System.out.println(p1.getDataPedido());
-        long distancia = p1.getDataPedidoCompletado()-p1.getDataPedido();
-        System.out.println(distancia);
-        Calendar tempo3 = Calendar.getInstance();
-        // tempo3.getTime(distancia);
-        // tempo.set
+        
+        // List<Produto> lista= new ArrayList<Produto>();
+        // Produto bala = new Produto("2","Bala" , "É uma bala de comer", 0.5f);
+        // Funcionario u1 = new Funcionario("Juaan", "123.423", "0");
+        // Administrador a1= new Administrador("Bruno", "144.34", "0");
+
+        // Sistema s1 = new Sistema(u1);
+        // Sistema s2 = new Sistema(a1);
+        Proxy p1 = new Proxy();
+        Sistema s1 = new Sistema();
+        Sistema s2 = new Sistema();
+        s1=(p1.verificarLogin("juangatao", "123"));
+        s2=(p1.verificarLogin("yuriCorno", "senha123"));
+
+        s1.mostrarPoder();
+        s2.mostrarPoder();
+
+        // s2.mostrarPoder();
     }
 }

@@ -24,22 +24,25 @@ public class Pedidos {
     public Pedidos(List<Produto> produtos){
         setProdutos(produtos);
 
-
-        tempo.set(2022, Calendar.FEBRUARY, 27);
-        setDataPedido();
-        tempo.set(2022, Calendar.FEBRUARY, 28);
-        setDataPedidoCompletado(tempo.getTimeInMillis());
+        // Exemplo de manipulacao de datas - Bom pra lembrar depois
+        // tempo.set(2022, Calendar.FEBRUARY, 27);
+        // setDataPedido();
+        // tempo.set(2022, Calendar.FEBRUARY, 28);
+        // setDataPedidoCompletado(tempo.getTimeInMillis());
 
     }
 
     ////////////////////// MÉTODOS //////////////////////
+    
     public void adicionarProduto(Produto novoProduto){
-        if(this.status.equals("Iniciado") || this.status.equals("Iniciado")){
+        // if(this.status.equals("Iniciado") || this.status.equals("Iniciado")){
+        //     System.out.println("Não é mais possível modifica pedido já está");
+            
+        // }
+            // Daqui pra baixo está funcionando
             produtos.add(novoProduto);
             System.out.println("Test: Novo produto adicionado");
             return;
-        }
-        System.out.println("Não é mais possível modifica pedido já está");
     }
     public void mostrarPedido(){
         System.out.println(produtos);
@@ -49,7 +52,7 @@ public class Pedidos {
         //// Imaginando, por agora, um mundo com 5 status(Ideia incial, pode ser alterado)... Iniciado, preparando, pronto, em transporte e entregue 
         if(estadoAtual==1){
             System.out.println("Pedido já na cadeia de pedidos");
-            this.status = "Iniciado";
+            this.status = "Iniciado"; //Era pra ser SET status, mas to com preguica - Depois mudo
             return;
         }
         if(estadoAtual==2){
@@ -114,6 +117,7 @@ public class Pedidos {
         this.horarioPedido = tempo.get(Calendar.HOUR_OF_DAY);
     }
 
+
     public float getValor() {
         for(int i = 0; i < this.produtos.size(); i++){
             this.valor += this.produtos.get(i).getValor();
@@ -124,6 +128,7 @@ public class Pedidos {
     public void setValor(float valor) {
         this.valor = valor;
     }
+
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
@@ -148,6 +153,7 @@ public class Pedidos {
         this.dataPedidoCompletado = dataPedidoCompletado;
     }
 
+
     /**
      * @return int return the horarioPedido
      */
@@ -162,6 +168,7 @@ public class Pedidos {
         this.horarioPedido = horarioPedido;
     }
 
+
     /**
      * @return String return the status
      */
@@ -175,6 +182,7 @@ public class Pedidos {
     public void setStatus(String status) {
         this.status = status;
     }
+
 
     /**
      * @return Calendar return the tempo

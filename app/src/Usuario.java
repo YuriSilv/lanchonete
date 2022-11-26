@@ -4,23 +4,21 @@ public abstract class Usuario {
     protected String cpf;
     protected String nivelAcesso;
 
+
+
+    ////////////////////// Construtor ////////////////////
+    public Usuario(String nome, String cpf, String nivelAcesso){
+        this.nome=nome;
+        this.cpf= cpf;
+        this.nivelAcesso=nivelAcesso;
+    }
+
+
+
+
     ////////////////////// MÉTODOS //////////////////////
     
 
-    /*public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }*/
+    
     
 }
