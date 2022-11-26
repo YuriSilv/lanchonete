@@ -24,7 +24,7 @@ public class App {
         long distancia = p1.getDataPedidoCompletado()-p1.getDataPedido();
         System.out.println(distancia);
         Calendar tempo3 = Calendar.getInstance();
-        tempo3.getTime(distancia);
-        tempo.set
+        // tempo3.getTime(distancia);
+        // tempo.set
     }
 }
