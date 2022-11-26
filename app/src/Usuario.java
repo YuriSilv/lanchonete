@@ -1,10 +1,12 @@
 public abstract class Usuario {
     ////////////////////// ATRIBUTOS //////////////////////
     protected String nome;
-    protected String id;
+    protected String cpf;
+    protected String nivelAcesso;
 
     ////////////////////// MÉTODOS //////////////////////
     
+
     /*public String getId() {
         return id;
     }

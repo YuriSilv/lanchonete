@@ -1,21 +1,25 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class Cliente {
+public class Cliente extends Usuario{
     
     ////////////////////// ATRIBUTOS //////////////////////
     private String nome;
     private String telefone;
     private String end;
+    private String cpf;
+    private List<Pedidos> pedidos = new ArrayList<Pedidos>();
+    //private final String id = UUID.randomUUID().toString();
     //private List ultimosPedidos = new ArrayList<Integer>();
 
 
-    public Cliente(String nome, String telefone, String end){
+    public Cliente(String nome, String cpf, String telefone, String end){
+        setCpf(cpf);
         setNome(nome);
         setEnd(end);
         setTelefone(telefone);
     }
-
 
     ////////////////////// MÉTODOS //////////////////////
     public String getEnd() {
@@ -40,5 +44,13 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 }

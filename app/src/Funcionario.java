@@ -1,18 +1,19 @@
-public class Funcionario {
+public class Funcionario extends Usuario{
     private String name;
-    private String id;
+    private String cpf;
+    private final String nivelAcesso = "2";
 
-    public Funcionario(String name, String id){
-        this.name = name;
-        this.id = id;
+    public Funcionario(String name, String cpf){
+        setCpf(cpf);
+        setName(name);
     }
 
-    public String getId() {
-        return id;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getName() {
