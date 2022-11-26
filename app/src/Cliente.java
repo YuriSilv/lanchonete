@@ -15,6 +15,7 @@ public class Cliente extends Usuario{
 
 
     public Cliente(String nome, String cpf, String telefone, String end){
+        super(nome, cpf, end);
         setCpf(cpf);
         setNome(nome);
         setEnd(end);
