@@ -15,16 +15,6 @@ public class App {
         /*Produto prod1 = new Produto("1", "Cachorro quente", 2.50F);
         Produto prod2 = new Produto("2", "Coca", 0.50F);
 
-
-
-
-
-
-
-
-
-
-
         /////////// METODOS -FASE DE TESTE- ///////////
         
         List<Produto> pedidos = new ArrayList<Produto>();
