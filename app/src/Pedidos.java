@@ -33,9 +33,77 @@ public class Pedidos {
     }
 
     ////////////////////// MÉTODOS //////////////////////
+    public void adicionarProduto(Produto novoProduto){
+        if(this.status.equals("Iniciado") || this.status.equals("Iniciado")){
+            produtos.add(novoProduto);
+            System.out.println("Test: Novo produto adicionado");
+            return;
+        }
+        System.out.println("Não é mais possível modifica pedido já está");
+    }
     public void mostrarPedidos(){
         System.out.println(produtos);
     }
+
+    public void atualizarStatus(int estadoAtual) {
+        //// Imaginando, por agora, um mundo com 5 status(Ideia incial, pode ser alterado)... Iniciado, preparando, pronto, em transporte e entregue 
+        if(estadoAtual==1){
+            System.out.println("Pedido já na cadeia de pedidos");
+            this.status = "Iniciado";
+            return;
+        }
+        if(estadoAtual==2){
+            System.out.println("Preparacao do pedido iniciada");
+            this.status = "Preparando";
+            return;
+        }
+        if(estadoAtual==3){
+            System.out.println("Pedido pronto");
+            this.status = "Pronto";
+            return;
+        }
+        if(estadoAtual==4){
+            System.out.println("Pedido em transito");
+            this.status = "Em transito";
+            return;
+        }
+        if(estadoAtual==5){
+            System.out.println("Preparacao do pedido iniciada");
+            this.status = "Entregue";
+            // this.dataPedidoCompletado();    Em construcao... fazer o salvar do tempo aq -TALVEZ-
+            return;
+        }
+        
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GETTERS E SETTERS 
 
     public long getDataPedido() {
         return dataPedido;
@@ -65,16 +133,7 @@ public class Pedidos {
         return produtos;
     }
 
-    public void atualizarStatus() {
-        int tempoAtual = tempo.get(Calendar.HOUR_OF_DAY);
-
-        if (tempoAtual == horarioPedido){
-            this.status = "Preparando";
-        }else if(tempoAtual+1 == horarioPedido){
-            this.status = "Pronto";
-        }
-    }
-
+    
     /**
      * @return long return the dataPedidoCompletado
      */
