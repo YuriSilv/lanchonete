@@ -41,7 +41,7 @@ public class Pedidos {
         }
         System.out.println("Não é mais possível modifica pedido já está");
     }
-    public void mostrarPedidos(){
+    public void mostrarPedido(){
         System.out.println(produtos);
     }
 
