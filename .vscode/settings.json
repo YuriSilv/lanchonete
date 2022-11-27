@@ -1,0 +1,9 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\yurid\\OneDrive\\Documentos\\Faculdade\\5 semestre\\POO\\java\\json-simple-1.1.1.jar",
+        "c:\\Users\\yurid\\OneDrive\\Documentos\\Faculdade\\5 semestre\\POO\\java\\json-org.jar",
+        "c:\\Users\\yurid\\OneDrive\\Documentos\\Faculdade\\5 semestre\\POO\\java\\gson-2.10.jar",
+        "c:\\Users\\yurid\\OneDrive\\Documentos\\Faculdade\\5 semestre\\POO\\java\\jackson-databind-2.14.1.jar"
+    ]
+}
