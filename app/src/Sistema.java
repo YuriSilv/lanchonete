@@ -1,96 +1,116 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Sistema {
 
     ////////// ATRIBUTOS ////////////////////
     private boolean logado;
-    final int numero_funcionarios = 14;
+    private int numero_funcionarios = 15;
     final int numero_adms = 1;
     private String nivelAcesso;
-    /// Talvez 3 niveis de acesso: 1 funcionario; 2 adm; 3 nivel masterblaster pika 
     
-    // Funcionario funcionarios[] = new Funcionario[numero_funcionarios];
-    // Administrador administradores[] = new Administrador[numero_adms];
+    Funcionario funcionarios[] = new Funcionario[numero_funcionarios+1];
+    Administrador administradores[] = new Administrador[numero_adms];
 
     List<Cliente> clientes = new ArrayList<Cliente>();
-    List<String> clientesCpf = new ArrayList<String>();  
 
     List<Pedidos> listaPedidos= new ArrayList<Pedidos>();
-
+    
+    Proxy proxy = new Proxy();
 
     /////// construtor //////////
     public Sistema(){
 
     }
-    public Sistema(Usuario user){
-        
-
-        setLogado(true);
-        System.out.println("Nivel de acesso recebido: "+user.nivelAcesso);
-        
-
-        setNivelAcesso(user.nivelAcesso); 
-    }
-
-
-
-
-
 
     //////// METODOS //////////////////////
 
-    ///test
-    public void mostrarPoder(){
-        
-        System.out.println(getNivelAcesso());
-        if(getNivelAcesso().equals("120")){
-            System.out.println("Vc é um administrador\n");
-        }
-        if(getNivelAcesso().equals("10")){
-            System.out.print("Voce é um funcionario\n");
+    //login
+    public void logar(String email, String senha) {
+        try {
+            setLogado(proxy.verificarLogin(email, senha));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public void sair(){
+    public void logout(){
         setLogado(false);
     }
 
+    public boolean isLogado() {
+        return logado;
+    }
 
-    public void CadastrarCliente(String nome, String cpf,String telefone, String end){
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
 
-        //erro
-        if (clientesCpf.contains(cpf)) {
-            System.out.println("Erro. User já cadastrado");
-        }else{
-            System.out.println("Cadastro feito com sucesso");
-            Cliente newCliente = new Cliente(nome, cpf, telefone, end);
+    //clientes
+    public void cadastrarCliente(String nome, String cpf, String telefone, String end){
+        try {
+            proxy.verificarDadosCliente(cpf, telefone);
+            Cliente newCliente = new Cliente(nome,cpf,telefone,end);
             clientes.add(newCliente);
-            clientesCpf.add(cpf);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
+    }
 
-        /*execeção de cliente já cadastrado
-        try{
-            clientes.contains(newCliente);
-            newCliente.getCpf();
-            clientes.add(newCliente);
+    public void removerCliente(String cpf){
+        //remover do BD
+        Iterator<Cliente> allClientes = clientes.iterator();
+        while (allClientes.hasNext()) {
+            Cliente c = allClientes.next();
+            if (c.getCpf() == cpf) {
+                allClientes.remove();
+                break;
+            }
         }
-        finally{
-            newCliente = null;
-        }*/
-        
+    }
+    //Classe cliente ainda incompleta. Mexer depois
+    public void editarCliente(String nome, String cpf, String telefone, String end){
+        //acessar no BD e editar
+        Iterator<Cliente> allClientes = clientes.iterator();
+        while (allClientes.hasNext()) {
+            Cliente c = allClientes.next();
+            if (c.getCpf() == cpf) {
+                allClientes.remove();
+                break;
+            }
+        }
     }
 
-    public void adicionarNovoProduto(){
-        /// Adicionando produtos na base de dados
+    public void listarClientes(){
+        for(Cliente c : clientes){
+            System.out.println(c.getNome());
+        }
     }
-    public void adicionarNovoFuncionario(){
-        /// PENSANDO AQUI... Talvez seja melhor fazer tipo com sobrecarga: Assim, ele receberia um usuario e definiria se é funcionario ou adm -So ideia- 
+
+    //Funcionarios
+    public void cadastrarEmpregado(String name, String cpf){
+        try {
+            //Arruma isso aq dps
+            if (numero_funcionarios != -1){
+                proxy.verificarDadosEmpregado(cpf);
+                Funcionario newFuncionario = new Funcionario(name, cpf, Funcionario.getNivelacesso());
+                funcionarios[numero_funcionarios] = newFuncionario;
+                numero_funcionarios -= 1;    
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
-    
 
-
-
+    //ADM
+    //Uma maneira mais lógica é pegar um funcionário e alterar seu nível de acesso. Seria uma idea de promoção.
+    public Administrador cadastrarEmpregado(String name, String cpf, String userName, String senha){
+        Administrador newAdministrador = new Administrador(name, cpf, Administrador.getNivelacesso(), userName, senha);
+        //dump funcionário para o BD
+        return newAdministrador;
+    }
+  
     // Aqui vai ser usado quando o array de produtos(pelo menos inicial) já estiver definido pelo usuario na interface
     // daqui o pedido é criado e guardado no array do Sistema--
     // Futuramente vamos definir como guardar essas modificacoes no JSON
@@ -98,35 +118,9 @@ public class Sistema {
         Pedidos p1 = new Pedidos(listaProdutos);
         this.listaPedidos.add(p1);
     }
-    
 
-    /**
-     * @return int return the nivelAcesso
-     */
     public String getNivelAcesso() {
         return nivelAcesso;
-    }
-
-    /**
-     * @param nivelAcesso the nivelAcesso to set
-     */
-    public void setNivelAcesso(String nivelAcesso) {
-        this.nivelAcesso = nivelAcesso;
-    }
-
-
-    /**
-     * @return boolean return the logado
-     */
-    public boolean isLogado() {
-        return logado;
-    }
-
-    /**
-     * @param logado the logado to set
-     */
-    public void setLogado(boolean logado) {
-        this.logado = logado;
     }
 
 }

@@ -17,11 +17,6 @@ public class Produto {
 
 
     ////////////////////// MÉTODOS //////////////////////
-    @Override
-    public String toString(){
-        return "|| OBJETO:  "+this.id+"|| Descricao:  "+this.descricao+"|| Valor: " +this.valor;
-    }
-
     public String getDescricao() {
         return descricao;
     }

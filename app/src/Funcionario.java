@@ -2,8 +2,8 @@ public class Funcionario extends Usuario{
     private String name;
     private String cpf;
     private static String nivelAcesso = "1";
-    public Funcionario(String name, String cpf, String acessoExtra){
-        super(name, cpf, nivelAcesso+acessoExtra);
+    public Funcionario(String name, String cpf, String nivelAcesso){
+        super(name, cpf, nivelAcesso);
     }
 
     public String getCpf() {
@@ -22,8 +22,8 @@ public class Funcionario extends Usuario{
         this.name = name;
     }
 
-
-    public String getNivelAcesso(){
-        return this.nivelAcesso;
+    public static String getNivelacesso() {
+        return nivelAcesso;
     }
+
 }

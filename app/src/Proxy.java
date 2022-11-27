@@ -1,42 +1,46 @@
+import java.util.regex.Pattern;
+import java.util.List;
+import java.util.ArrayList;
+
 public class Proxy{
-    
+    //verificar cpf no BD
+    List<String> clientesCpf = new ArrayList<String>();
+    List<String> funcionariosCpf = new ArrayList<String>(); 
 
+    public boolean verificarLogin(String userName, String senha){
 
-
-
-
-    public Sistema verificarLogin(String email, String senha){
-        /// daí ele vai buscar no JSON um usuario com esses dados e retornar o objeto usuario
-        // depois vamo instanciar um objeto da classe sistema usando esse usuario como paramentro
-        // Usuario teste = result JSON
-        // Sistema s1 = new Sistema(teste);
-        // s1.logar();
-        // Nesse usuario já vai ter guardado o nivel de acesso dele, pra o sistema decidir suas funcionalidades
-        System.out.println("Chegou aqui\n");
-
-        if(email.equals("juangatao")&& senha.equals("123")){
-            Funcionario u1 = new Funcionario("Juaan", "123.423", "0");
-            Sistema s1 = new Sistema(u1);
-            System.out.println("123 logado");
-            return s1;
-
+        if(userName.equals("juangatao") && senha.equals("123")){
+            return true;
         }
-        if(email.equals("yuriCorno")&& senha.equals("senha123")){
-            Administrador u1 = new Administrador("Yuri", "134.423", "0");
-            Sistema s1 = new Sistema(u1);
-            return s1;
-
-        }
-        Sistema erro = new Sistema(null);
-        return erro;
-    }
-
-    public void verificarCadastrar(String email, String senha){
-    }
-
-
-
-    public void gerarID(){
         
+        if(userName.equals("lordYuri") && senha.equals("senha123")){
+            return true;
+        }
+        //OBS. Se der tempo alterar as exceções para os tipos corretos
+        throw new RuntimeException("Usuário ou senha inválido");
+    }
+
+    public void verificarDadosCliente(String cpf, String telefone){
+        if(cpf.length() != 11 || !(cpf.matches("[0-9]+"))){
+            throw new RuntimeException("cpf inválido");
+        }
+
+        if(telefone.length() != 8 || !(telefone.matches("[0-9]+"))){
+            throw new RuntimeException("número inválido");
+        }
+
+        if (clientesCpf.contains(cpf)) {
+            throw new RuntimeException("Cliente já cadastrado");
+        }
+    }
+
+    public void verificarDadosEmpregado(String cpf){
+        if(cpf.length() != 11){
+            throw new RuntimeException("cpf inválido");
+        }
+
+        if (funcionariosCpf.contains(cpf)) {
+            throw new RuntimeException("Cliente já cadastrado");
+        }
     }
 }

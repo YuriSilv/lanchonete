@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario implements Comparable<Cliente>{
     
     ////////////////////// ATRIBUTOS //////////////////////
     private String nome;
@@ -15,7 +15,7 @@ public class Cliente extends Usuario{
 
 
     public Cliente(String nome, String cpf, String telefone, String end){
-        super(nome, cpf, end);
+        super(nome, cpf, "0");
         setCpf(cpf);
         setNome(nome);
         setEnd(end);
@@ -23,6 +23,15 @@ public class Cliente extends Usuario{
     }
 
     ////////////////////// MÉTODOS //////////////////////
+
+    public int compareTo(Cliente outraConta){
+        if (outraConta.cpf.equals("414")) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
     public String getEnd() {
         return end;
     }

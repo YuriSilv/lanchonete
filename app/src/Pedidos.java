@@ -13,7 +13,6 @@ public class Pedidos {
     
     //////Final teste
 
-
     private int horarioPedido;
     private List<Produto> produtos = new ArrayList<Produto>();
     private float valor;
@@ -76,30 +75,7 @@ public class Pedidos {
             // this.dataPedidoCompletado();    Em construcao... fazer o salvar do tempo aq -TALVEZ-
             return;
         }
-        
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

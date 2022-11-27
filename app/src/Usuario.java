@@ -5,20 +5,14 @@ public abstract class Usuario {
     protected String nivelAcesso;
 
 
-
     ////////////////////// Construtor ////////////////////
     public Usuario(String nome, String cpf, String nivelAcesso){
         this.nome=nome;
         this.cpf= cpf;
-        this.nivelAcesso=nivelAcesso;
+        this.nivelAcesso = nivelAcesso;
     }
 
-
-
-
     ////////////////////// MÉTODOS //////////////////////
-    
-
-    
+        
     
 }
