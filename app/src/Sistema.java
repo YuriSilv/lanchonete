@@ -18,6 +18,7 @@ public class Sistema {
     List<Pedidos> listaPedidos= new ArrayList<Pedidos>();
     
     Proxy proxy = new Proxy();
+    JsonConex connection = new JsonConex();
 
     /////// construtor //////////
     public Sistema(){
@@ -52,7 +53,7 @@ public class Sistema {
         try {
             proxy.verificarDadosCliente(cpf, telefone);
             Cliente newCliente = new Cliente(nome,cpf,telefone,end);
-            clientes.add(newCliente);
+            connection.dumpCliente("app\\data\\clientes.json", newCliente);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }

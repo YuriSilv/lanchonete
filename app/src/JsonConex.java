@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.json.*;
+import com.google.gson.Gson;
 
 public class JsonConex {
 
@@ -21,16 +22,17 @@ public class JsonConex {
         return null;
     }
 
-    public void dumpCliente(JSONArray jsonDumpArray, String path, Cliente cliente){
+    public void dumpCliente(String path, Cliente cliente){
         JSONObject jsonFile = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-
+        JSONArray jsonDumpArray = open(path);
+        
         jsonFile.put("nome", cliente.getNome());
         jsonFile.put("cpf", cliente.getCpf());
         jsonFile.put("telefone", cliente.getTelefone());
         jsonFile.put("endereço", cliente.getCpf());
         jsonArray.put(jsonFile);
-
+        
         String data = jsonDumpArray.toString();
         try {
             writeFile = new FileWriter(path, false);
