@@ -18,6 +18,7 @@ public class Pedidos {
     private float valor;
     private String status;
     private Calendar tempo = Calendar.getInstance();
+    private String cpf;
 
 
     public Pedidos(List<Produto> produtos){

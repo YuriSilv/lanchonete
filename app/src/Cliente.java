@@ -9,7 +9,6 @@ public class Cliente extends Usuario implements Comparable<Cliente>{
     private String telefone;
     private String end;
     private String cpf;
-    private List<Pedidos> pedidos = new ArrayList<Pedidos>();
     //private final String id = UUID.randomUUID().toString();
     //private List ultimosPedidos = new ArrayList<Integer>();
 

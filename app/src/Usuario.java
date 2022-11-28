@@ -12,7 +12,4 @@ public abstract class Usuario {
         this.nivelAcesso = nivelAcesso;
     }
 
-    ////////////////////// MÉTODOS //////////////////////
-        
-    
 }
