@@ -1,17 +1,8 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.UUID;
-
 public class Cliente extends Usuario implements Comparable<Cliente>{
     
     ////////////////////// ATRIBUTOS //////////////////////
-    private String nome;
     private String telefone;
-    private String end;
-    private String cpf;
-    //private final String id = UUID.randomUUID().toString();
-    //private List ultimosPedidos = new ArrayList<Integer>();
-
+    private String end;    
 
     public Cliente(String nome, String cpf, String telefone, String end){
         super(nome, cpf, "0");

@@ -3,12 +3,13 @@ import java.util.Calendar;
 public class Produto {
     
     ////////////////////// ATRIBUTOS //////////////////////
-    private String id;
+    private static int idControl;
+    private int id;
     private String nome;
     private String descricao;
     private float valor;
 
-    public Produto(String id, String nome, String descricao, Float valor){
+    public Produto(String nome, String descricao, Float valor){
         setId(id);
         setNome(nome);
         setDescricao(descricao);
@@ -25,12 +26,13 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(int id) {
+        this.id = idControl;
+        idControl ++;
     }
 
     public float getValor() {

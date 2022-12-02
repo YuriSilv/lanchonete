@@ -1,29 +1,41 @@
 public class Funcionario extends Usuario{
-    private String name;
-    private String cpf;
-    private static String nivelAcesso = "1";
-    public Funcionario(String name, String cpf, String nivelAcesso){
+    private static final String nivelAcesso = "1";
+    protected String senha;
+    public Funcionario(String name, String cpf, String nivelAcesso, String senha){
         super(name, cpf, nivelAcesso);
+        this.senha = senha;
     }
 
+    @Override
     public String getCpf() {
         return cpf;
     }
 
+    @Override
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getNome() {
+        return nome;
+    }
+    
+    @Override
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public static String getNivelacesso() {
+    public static String getNivelAcesso() {
         return nivelAcesso;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
 }

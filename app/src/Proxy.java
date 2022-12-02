@@ -6,7 +6,9 @@ public class Proxy{
     //verificar cpf no BD
     List<String> clientesCpf = new ArrayList<String>();
     List<String> funcionariosCpf = new ArrayList<String>(); 
-
+    
+    private static int tryCount = 0;
+    
     public boolean verificarLogin(String userName, String senha){
 
         if(userName.equals("juangatao") && senha.equals("123")){
@@ -43,4 +45,30 @@ public class Proxy{
             throw new RuntimeException("Cliente já cadastrado");
         }
     }
+    
+    public static void verificarSenha(String senha){
+        if(senha.length() < 4){
+            throw new RuntimeException("tamanho de senha inválido");
+        }
+    }
+    
+    public static boolean validarSenha(String senhaAntiga, String senhaAntigaValida){
+        if(!(senhaAntiga.equals(senhaAntigaValida))){
+            setTryCount();
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static int getTryCount() {
+        return tryCount;
+    }
+
+    public static void setTryCount() {
+        Proxy.tryCount++;
+    }
+    
+    
+    
 }

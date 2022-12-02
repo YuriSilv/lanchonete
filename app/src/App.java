@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import com.google.gson.Gson;
+
 //import org.json.simple.*;
  
 
@@ -15,15 +17,15 @@ public class App {
      */
     public static void main(String[] args) throws Exception {
 
-        Sistema s1 = new Sistema();
-        //s1.cadastrarCliente("Yuri", "12345678900", "12345678", "Cidade Nova");
-        //s1.cadastrarCliente("Ruan", "12345678911", "12345678", "Jardim Imp");
-        //JsonConex connection = new JsonConex();
-        
-        //Cliente c = new Cliente("Yuri", "12345678910", "12345678", "DTNA");
-        
-        //connection.dumpCliente("app\\data\\clientes.json", c);
-        //s1.logar("lordYuri", "senha123");
-        s1.cadastrarCliente("Yuri", "12345678910", "12345678", "DTNA");
+        String json = "{\"cpf\":12345678900,\"nome\":\"Victor\",\"endereço\":\"dtna\"}";
+		
+		// --- transformando em Objeto Java --- //
+		Gson gson = new Gson(); // conversor
+		Cliente objCliente = gson.fromJson(json, Cliente.class);
+		
+		// exibindo dados em Java //
+		System.out.println( objCliente.getNome() );
+		System.out.println( objCliente.getCpf() );
+		System.out.println( objCliente.getEnd());
     }
 }
