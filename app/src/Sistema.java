@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -10,17 +10,11 @@ public class Sistema {
     private boolean logado;
     private int numero_funcionarios = 15;
     final int numero_adms = 1;
-    private String nivelAcesso;
     
     Funcionario funcionarios[] = new Funcionario[numero_funcionarios+1];
     Administrador administradores[] = new Administrador[numero_adms];
-
-    List<Cliente> clientes = new ArrayList<Cliente>();
-
-    List<Pedidos> listaPedidos= new ArrayList<Pedidos>();
     
     Proxy proxy = new Proxy();
-    JsonConex connection = new JsonConex();
 
     /////// construtor //////////
     public Sistema(){
@@ -189,6 +183,17 @@ public class Sistema {
         }
     }
     
+    public boolean searchPedido(String nome){
+         ArrayList<Produto> produtosJson = JsonConex.dadosProdutos();
+         for(Produto p: produtosJson){
+             if(p.getNome().equals(nome)){
+                 return true;
+             }
+         }
+         System.out.println("Erro");
+         return false;
+    }
+    
     //Funcionarios
     public void cadastrarEmpregado(String name, String cpf, String nivelAcesso, String senha) throws IOException{
         try {
@@ -281,6 +286,111 @@ public class Sistema {
             }*/
         }
     }
+    
+    //Pedidos
+    
+    public ArrayList<Produto> checkPedido(ArrayList<String> produtos){
+        ArrayList<Produto> produtosJson = JsonConex.dadosProdutos();
+            ArrayList<Produto> produtosPedido = new ArrayList<Produto>();
+            float valor = 0;
+            for(int i = 0; i < produtos.size(); i++){
+                for(Produto p: produtosJson){
+                    if(p.getNome().equals(produtos.get(i))){
+                        produtosPedido.add(p);
+                        valor += p.getValor();
+                        break;
+                    }     
+
+                }    
+            }
+            return produtosPedido;
+    }
+    
+    public void cadastrarPedidos(String cpf, ArrayList<String> produtos) throws IOException{
+        try {
+            //proxy.verificarDadosCliente(cpf, telefone);
+            ArrayList<Produto> produtosJson = JsonConex.dadosProdutos();
+            ArrayList<Produto> produtosPedido = new ArrayList<Produto>();
+            float valor = 0;
+            for(int i = 0; i < produtos.size(); i++){
+                for(Produto p: produtosJson){
+                    if(p.getNome().equals(produtos.get(i))){
+                        produtosPedido.add(p);
+                        valor += p.getValor();
+                        break;
+                    }     
+
+                }    
+            }
+            Pedidos newPedido = new Pedidos(valor,cpf);
+            newPedido.setProdutos(produtosPedido);
+            JsonConex.dump(newPedido);
+
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void removerPedido(String cpf, int id) throws IOException{
+        //remover do BD
+        ArrayList<Pedidos> pedidos = JsonConex.dadosPedidos();
+        Iterator<Pedidos> allPedidos = pedidos.iterator();
+        while (allPedidos.hasNext()) {
+            Pedidos p = allPedidos.next();
+            if (p.getCpf().equals(cpf) & p.getId() == id) {
+                allPedidos.remove();
+                JsonConex.saveState(JsonConex.pedidosPath, pedidos);
+            }
+        }
+    }
+        
+    public void editarPedido(String cpf, int id, String dataType) throws IOException{
+        //acessar no BD e editar
+        ArrayList<Pedidos> pedidos = JsonConex.dadosPedidos();
+        Iterator<Pedidos> allPedidos = pedidos.iterator();
+        Scanner ler = new Scanner(System.in);
+        //System.out.printf("Informe o tipo de dado que se deseja alterar(1 - end, 2 - nome, 3 - cpf, 4 - telefone):\n");
+        //int key = ler.nextInt();
+        
+        while (allPedidos.hasNext()) {
+            Pedidos p = allPedidos.next();
+            if (p.getCpf().equals(cpf) & p.getId() == id) {
+                if (dataType == "cpf"){
+                    System.out.printf("Informe o novo cpf:\n");
+                    String palavra = ler.next();
+                    p.setCpf(palavra);
+                }
+                else if (dataType == "status"){
+                    System.out.printf("Informe o status:\n");
+                    int status = ler.nextInt();
+                    p.atualizarStatus(status);
+                }
+                else if (dataType == "hora"){
+                    System.out.printf("Informe a nova hora:\n");
+                    int hora = ler.nextInt();
+                    p.setHorarioEntrega(hora);
+                }
+                else if (dataType == "produto"){
+                    System.out.printf("Informe o novo cpf:\n");
+                    String palavra = ler.next();
+                    //p.setProdutos(produtos);
+                }
+                JsonConex.saveState(JsonConex.pedidosPath, pedidos);
+                ler.close();
+                break;
+            }
+        }
+        ler.close();
+    }
+    /*
+    public void listarProdutos(){
+        ArrayList<Produto> produtos = JsonConex.dadosProdutos();
+        Iterator<Produto> allProdutos = produtos.iterator();
+        while (allProdutos.hasNext()) {
+            Produto p = allProdutos.next();
+            System.out.println("Nome: " + p.getNome() + "| Valor: " + p.getValor());
+        }
+    }*/
 
 }
 
