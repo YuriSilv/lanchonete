@@ -1,8 +1,0 @@
-{
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "C:\\Program Files\\NetBeans-15\\netbeans\\java\\modules\\ext\\json-simple-1.1.1.jar",
-        "C:\\Users\\yurid\\OneDrive\\Documentos\\Faculdade\\5 semestre\\POO\\java\\json-org.jar"
-    ]
-}
