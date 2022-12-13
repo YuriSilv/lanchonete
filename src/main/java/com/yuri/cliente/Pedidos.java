@@ -6,7 +6,6 @@ import java.time.LocalTime;
 
 public class Pedidos {
     
-    private final String statusPossiveis[] = {"em preparo", "pronto", "a caminho", "entregue", "devolvido"};
     private ArrayList<Produto> produtos = new ArrayList<>();
     private String dataPedido;
     private String status;
@@ -26,7 +25,7 @@ public class Pedidos {
         dataPedido = LocalDate.now().toString();
         horarioPedido = LocalTime.now().getHour();
         this.valorTotal = valorTotal;
-        this.status = statusPossiveis[0];
+        this.status = "em preparo";
         this.cpf = cpf;
         //setId();
     }

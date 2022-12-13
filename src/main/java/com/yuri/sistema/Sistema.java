@@ -3,9 +3,9 @@ package com.yuri.sistema;
 import com.yuri.cliente.*;
 import com.yuri.empregados.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 public class Sistema {
     private final Connection<Administrador> connectionAdmnistrador = new Connection<>();
@@ -246,6 +246,7 @@ public class Sistema {
         try {
             Produto newProduto = new Produto(nome,descricao,valor);
             newProduto.setId(defIdUnico(Produto.class.getName()));
+            connectionProduto.dump(newProduto, connectionProduto.getPathProdutos());
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -257,7 +258,6 @@ public class Sistema {
      * @throws IOException 
      */
     public void removerProduto(int id) throws IOException{
-        //remover do BD
         ArrayList<Produto> produtos = connectionProduto.dadosJson(connectionProduto.getPathProdutos(), Produto[].class);
         Iterator<Produto> allProduto = produtos.iterator();
         while (allProduto.hasNext()) {
@@ -304,6 +304,233 @@ public class Sistema {
         ArrayList<Produto> produtos = connectionProduto.dadosJson(connectionProduto.getPathProdutos(), Produto[].class);
         Produto[] dados = new Produto[produtos.size()];
         dados = produtos.toArray(dados);
+        return dados;
+    }
+    
+    /**
+     * Cadastra um pedido na base de dados
+     * @param cpf cpf do cliente que terá o pedido cadastrado
+     * @param produtos lista com os ids dos produtos que serão cadastrados
+     * @throws IOException 
+     */
+    public void cadastrarPedidos(String cpf, int[] produtos) throws IOException{
+        try {
+            float valor = 0;
+            
+            ArrayList<Produto> allProdutos = connectionProduto.dadosJson(connectionProduto.getPathProdutos(), Produto[].class);
+            ArrayList<Produto> produtosPedido = new ArrayList<>();
+
+            for(Produto p: allProdutos){
+                for(int i = 0; i < produtos.length; i++){
+                    if(p.getId() == produtos[i]){
+                        produtosPedido.add(p);
+                        valor += p.getValor();
+                    }
+                }
+            }
+            Pedidos newPedido = new Pedidos(valor, cpf);
+            newPedido.setId(defIdUnico(Pedidos.class.getName()));
+            newPedido.setProdutos(produtosPedido);
+            connectionPedidos.dump(newPedido, connectionPedidos.getPathPedidos());
+
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Remove um pedido da base de dados
+     * @param id define o id do pedido que será removido
+     * @throws IOException 
+     */
+    public void removerPedido(int id) throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        Iterator<Pedidos> allPedidos = pedidos.iterator();
+        while (allPedidos.hasNext()) {
+            Pedidos p = allPedidos.next();
+            if (p.getId() == id) {
+                allPedidos.remove();
+                connectionPedidos.saveState(connectionPedidos.getPathPedidos(), pedidos);
+                break;
+            }
+        }
+    }
+    
+    /**
+     * Permite editar um determinado pedido
+     * @param id define o id do pedido que será editado
+     * @param dataType define qual dado será alterado, podendo ser o status, cpf, valor ou horarioEntrega
+     * @param info define a nova informação
+     * @throws IOException 
+     */
+    public void editarPedido(int id, String dataType, String info) throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        for (Pedidos p : pedidos) {
+            if (p.getId() == id) {
+                if (null != dataType)switch (dataType) {
+                    case "status" -> p.setStatus(info);
+                    case "cpf" -> p.setCpf(info);
+                    case "horarioEntrega" -> p.setHorarioEntrega(Integer.parseInt(info));
+                    default -> {
+                    }
+                }
+                connectionPedidos.saveState(connectionPedidos.getPathPedidos(), pedidos);
+                break;
+            }
+        }
+    }
+    
+    /**
+     * Função que permite editar somente os produtos dentro de um pedido e recalcula o valor
+     * @param id id do pedido
+     * @param idProdutos ids dos novos produtos
+     * @throws IOException 
+     */
+    public void editarProdutoInPedido(int id, int[] idProdutos) throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        ArrayList<Produto> allProdutos = connectionProduto.dadosJson(connectionProduto.getPathProdutos(), Produto[].class);
+        ArrayList<Produto> produtos = new ArrayList<>();
+        float newValue = 0;
+        for (Pedidos p : pedidos) {
+            if (p.getId() == id) {
+                for(Produto listProdutos: allProdutos){
+                    for(int j = 0; j < idProdutos.length; j++){
+                        if(idProdutos[j] == listProdutos.getId()){
+                            produtos.add(listProdutos);
+                            newValue += listProdutos.getValor();
+                        }
+                    }
+                }
+                
+                p.setProdutos(produtos);
+                p.setValorTotal(newValue);
+                break;
+            }
+        }
+        connectionPedidos.saveState(connectionPedidos.getPathPedidos(), pedidos);
+    }
+    
+    /**
+     * Lista os pedidos da base de dados
+     * @return retorna um array com todos os pedidos
+     * @throws IOException 
+     */
+    public Pedidos[] listarPedidos() throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        Pedidos[] dados = new Pedidos[pedidos.size()];
+        dados = pedidos.toArray(dados);
+        return dados;
+    }
+    
+    /**
+     * Filtra a data em um intervalo de tempo
+     * @param date1 data inicial
+     * @param date2 data final
+     * @param horaInicial horário inicial
+     * @param horaFinal horário final
+     * @param compareDate define a data que será comparada, ou seja, a passada pelo usuário
+     * @param compareHour define a hora que será comparada, ou seja, a passada pelo usuário
+     * @return retorna se a data passada está no intervalo(true) ou não(false)
+     */
+    public boolean filterDate(String date1, String date2, int horaInicial, int horaFinal, String compareDate, int compareHour){
+        LocalDate t1 = LocalDate.parse(date1);
+        LocalDate t2 = LocalDate.parse(date2);
+        LocalDate compareTime = LocalDate.parse(compareDate);
+        
+        return (compareTime.getYear()>= t1.getYear() & compareTime.getMonthValue()>= t1.getMonthValue() 
+                & compareTime.getDayOfMonth() >= t1.getDayOfMonth() & compareHour >= horaInicial) &
+                (compareTime.getYear()<= t1.getYear() & compareTime.getMonthValue() <= t2.getMonthValue()
+                & compareTime.getDayOfMonth() <= t2.getDayOfMonth() & compareHour <= horaFinal);
+        
+    }
+    
+    /**
+     * Pesquisa um produto vendido em um intervalo de tempo
+     * @param date1 data inicial
+     * @param date2 data final
+     * @param hora1 horário inicial
+     * @param hora2 horário final
+     * @param cpf cpf do cliente que será pesquisado
+     * @return retorna um ArrayList com todos os produtos vendidos para um determinado cliente
+     * @throws IOException 
+     */
+    public ArrayList<Produto> pesquisarProdutos(String date1, String date2, int hora1, int hora2, String cpf) throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        Iterator<Pedidos> allPedidos = pedidos.iterator();
+        ArrayList<Produto> produtos = new ArrayList<>();
+
+        while (allPedidos.hasNext()) {
+            Pedidos p = allPedidos.next();
+            if (p.getCpf().equals(cpf)){
+                if(filterDate(date1, date2, hora1, hora2, p.getDataPedido(), p.getHorarioPedido())){
+                    for (Produto pr : p.getProdutos()){
+                        produtos.add(pr);
+                    }
+                }
+            }
+        }
+        return produtos;
+    }
+    
+    /**
+     * Pesquisa os pedidos de um cliente em um intervalo de tempo
+     * @param cpf cpf do cliente que será pesquisado
+     * @param date1 data inicial
+     * @param date2 data final
+     * @param hora1 hora inicial
+     * @param hora2 hora final
+     * @return retorna um ArrayList com todos os pedidos vendidos para um determinado cliente
+     * @throws IOException 
+     */
+    public Pedidos[] getClientePedidos(String cpf, String date1, String date2, int hora1, int hora2) throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        ArrayList<Cliente> clientes = connectionCliente.dadosJson(connectionCliente.getPathClinte(), Cliente[].class);
+        ArrayList<Pedidos> pedidosCliente = new ArrayList<>();
+        for (Cliente c : clientes) {
+            if (c.getCpf().equals(cpf)) {
+                for(Pedidos p: pedidos){
+                    if(p.getCpf().equals(cpf)){
+                        pedidosCliente.add(p);
+                    }
+                }
+                break;
+            }
+        }
+        Pedidos[] dados = new Pedidos[pedidosCliente.size()];
+        dados = pedidosCliente.toArray(dados);
+        return dados;
+    }
+    
+    /**
+     * Define as estatística em um determinado período de tempo
+     * @param date1 data inicial
+     * @param date2 data final
+     * @param hora1 hora inicial
+     * @param hora2 hora final
+     * @return retorna a array com a média e o desvio padrão, respectivamente
+     * @throws IOException 
+     */
+    public double[] getEstatistica(String date1, String date2, int hora1, int hora2) throws IOException{
+        ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        Iterator<Pedidos> allPedidos = pedidos.iterator();
+        ArrayList<Float> valores = new ArrayList<>();
+        
+        float mean = 0;
+        float desvioPadrao = 0;
+     
+        while (allPedidos.hasNext()) {
+            Pedidos p = allPedidos.next();
+            if(filterDate(date1, date2, hora1, hora2, p.getDataPedido(), p.getHorarioPedido())){
+                valores.add(p.getValorTotal());
+                mean += p.getValorTotal();
+            }
+        }
+        mean = mean/valores.size();
+        for (Float v : valores){
+            desvioPadrao = (float)Math.pow((v-mean),2);
+        }
+        desvioPadrao = desvioPadrao/(valores.size()-1);
+        double[] dados = {mean, desvioPadrao};
         return dados;
     }
 }

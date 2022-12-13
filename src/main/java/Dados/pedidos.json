@@ -1,1 +1,1 @@
-[]
+[{"produtos":[{"nome":"Coca","descricao":"Coca Cola 1L","valor":3.25,"id":3},{"nome":"Suco de Laranja","descricao":"Suco de laranja natural","valor":1.5,"id":4}],"dataPedido":"2022-12-13","status":"feito","cpf":"111111","valorTotal":4.75,"horarioEntrega":2,"horarioPedido":10,"id":1}]
