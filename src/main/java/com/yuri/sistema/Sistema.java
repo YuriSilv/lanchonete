@@ -586,4 +586,11 @@ public class Sistema {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Sistema{" + "connectionAdmnistrador=" + connectionAdmnistrador + ", connectionFuncionario=" + connectionFuncionario + ", connectionProduto=" + connectionProduto + ", connectionPedidos=" + connectionPedidos + ", connectionCliente=" + connectionCliente + ", connectionExtrato=" + connectionExtrato + ", contadorCliente=" + contadorCliente + '}';
+    }
+    
+    
 }

@@ -1,7 +1,6 @@
 package com.yuri.sistema;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -185,6 +184,9 @@ public class Connection <T>{
     public final void setPathExtratos(String pathExtratos) {
         this.pathExtratos = pathExtratos;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Connection{" + "pathClinte=" + pathClinte + ", pathEmpregado=" + pathEmpregado + ", pathProdutos=" + pathProdutos + ", pathPedidos=" + pathPedidos + ", pathExtratos=" + pathExtratos + '}';
+    }
 }

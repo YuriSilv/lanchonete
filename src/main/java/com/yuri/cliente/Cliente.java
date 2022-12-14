@@ -1,7 +1,7 @@
 package com.yuri.cliente;
 import com.yuri.empregados.Usuario;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario implements Comparable{
     
     private String telefone;
     private String endereco;
@@ -66,5 +66,15 @@ public class Cliente extends Usuario{
      */
     public static void setContador() {
         Cliente.contador += 1;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "Nome=" + super.getNome() + ", CPF=" + super.getCpf() + "telefone=" + telefone + ", endereco=" + endereco + '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

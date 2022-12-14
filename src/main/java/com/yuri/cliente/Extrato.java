@@ -25,6 +25,11 @@ public class Extrato extends Pedidos{
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return "Extrato{" + "nome=" + nome + ", cpf=" + super.getCpf() + ", valor=" + super.getValorTotal() + '}';
+    }
     
     
 }

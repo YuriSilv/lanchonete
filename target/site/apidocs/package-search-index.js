@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.yuri.cliente"},{"l":"com.yuri.empregados"},{"l":"com.yuri.lanchonetev2"},{"l":"com.yuri.sistema"},{"l":"com.yuri.view"}];updateSearchResults();

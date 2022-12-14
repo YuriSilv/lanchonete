@@ -47,6 +47,9 @@ public class Funcionario extends Usuario{
     public void setisAdm(boolean isAdm) {
         this.isAdm = isAdm;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Funcionario{" + "Nome=" + super.getNome() + ", CPF=" + super.getCpf() +", senha=" + senha + ", isAdm=" + isAdm + '}';
+    }
 }

@@ -12,4 +12,9 @@ public class Administrador extends Funcionario{
     public Administrador(String nome, String cpf, String senha, boolean isAdm){
         super(nome, cpf, senha, isAdm);
     }
+
+    @Override
+    public String toString() {
+        return "Administrador{" + "Nome=" + super.getNome() + ", CPF=" + super.getCpf() +", senha=" + super.getSenha() + ", isAdm=" + super.getIsAdm() + '}';
+    }
 }

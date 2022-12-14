@@ -157,5 +157,9 @@ public class Pedidos {
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Pedidos{" + "produtos=" + produtos + ", dataPedido=" + dataPedido + ", status=" + status + ", cpf=" + cpf + ", valorTotal=" + valorTotal + ", horarioEntrega=" + horarioEntrega + ", horarioPedido=" + horarioPedido + ", id=" + id + '}';
+    }
 }

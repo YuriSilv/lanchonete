@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.yuri.view;
 
 import com.yuri.sistema.Sistema;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -142,12 +138,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         try {
-            
             if(sistemaPrincipal.logar(userNameLogin.getText(), senhaLogin.getText())){
-                System.out.println(senhaLogin.getPassword());
                 TelaPrincipal t1 = new TelaPrincipal();
                 t1.setVisible(true);
                 this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(this, "Senha ou Usuário Incorreto.\n(Tente user: admin e senha: admin)");
             }
         } catch (IOException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
