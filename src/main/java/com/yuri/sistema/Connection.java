@@ -17,6 +17,7 @@ public class Connection <T>{
     private String pathEmpregado;
     private String pathProdutos;
     private String pathPedidos;
+    private String pathExtratos;
 
     /**
      * Inicializa os caminhos de diretórios para a base de dados.
@@ -26,6 +27,7 @@ public class Connection <T>{
         setPathEmpregado("src\\main\\java\\Dados\\empregados.json");
         setPathProdutos("src\\main\\java\\Dados\\produtos.json");
         setPathPedidos("src\\main\\java\\Dados\\pedidos.json");
+        setPathExtratos("src\\main\\java\\Dados\\extratos.json");
     }
 
     /**
@@ -77,7 +79,6 @@ public class Connection <T>{
         File file = new File(path);
         Gson gson = new Gson();
         String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
-        System.out.println("foi");
         T[] dadosArr = gson.fromJson(content, classType);
         ArrayList<T> dados = new ArrayList<>(Arrays.asList(dadosArr));
         return dados;
@@ -167,6 +168,22 @@ public class Connection <T>{
      */
     public final void setPathPedidos(String pathPedidos) {
         this.pathPedidos = pathPedidos;
+    }
+    
+    /**
+     * 
+     * @return retorna o path do json extratos
+     */
+    public String getPathExtratos() {
+        return pathExtratos;
+    }
+    
+    /**
+     * 
+     * @param pathExtratos define o path do json extratos
+     */
+    public final void setPathExtratos(String pathExtratos) {
+        this.pathExtratos = pathExtratos;
     }
     
     

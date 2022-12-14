@@ -13,6 +13,8 @@ public class Sistema {
     private final Connection<Produto> connectionProduto = new Connection<>();
     private final Connection<Pedidos> connectionPedidos = new Connection<>();
     private final Connection<Cliente> connectionCliente = new Connection<>();
+    private final Connection<Extrato> connectionExtrato = new Connection<>();
+    protected int contadorCliente;
     
     Funcionario funcionarios[] = new Funcionario[15];
     
@@ -61,6 +63,7 @@ public class Sistema {
             //proxy.verificarDadosCliente(cpf, telefone);
             Cliente newCliente = new Cliente(nome,cpf,telefone,end);
             connectionCliente.dump(newCliente, connectionCliente.getPathClinte());
+            contadorCliente+=1;
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -121,6 +124,23 @@ public class Sistema {
         Cliente[] dados = new Cliente[clientes.size()];
         dados = clientes.toArray(dados);
         return dados;
+    }
+    
+    /**
+     * Permite pesquisar um cliente específico na base de dados
+     * @param cpf define o cpf do cliente a ser pesquisado
+     * @return  retorna um objeto do tipo cliente
+     * @throws IOException 
+     */
+    public Cliente pesquisarCliente(String cpf) throws IOException{
+        ArrayList<Cliente> clientes = connectionCliente.dadosJson(connectionCliente.getPathClinte(), Cliente[].class);
+        
+        for(Cliente c: clientes){
+            if(cpf.equals(c.getCpf())){
+                return c;
+            }
+        }
+        return null;
     }
     
     /**
@@ -332,7 +352,10 @@ public class Sistema {
             newPedido.setId(defIdUnico(Pedidos.class.getName()));
             newPedido.setProdutos(produtosPedido);
             connectionPedidos.dump(newPedido, connectionPedidos.getPathPedidos());
-
+            
+            Cliente c = pesquisarCliente(cpf);
+            Extrato e = new Extrato(valor, cpf, c.getNome());
+            gerarExtrato(e);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
@@ -437,10 +460,15 @@ public class Sistema {
         LocalDate t2 = LocalDate.parse(date2);
         LocalDate compareTime = LocalDate.parse(compareDate);
         
-        return (compareTime.getYear()>= t1.getYear() & compareTime.getMonthValue()>= t1.getMonthValue() 
-                & compareTime.getDayOfMonth() >= t1.getDayOfMonth() & compareHour >= horaInicial) &
-                (compareTime.getYear()<= t1.getYear() & compareTime.getMonthValue() <= t2.getMonthValue()
-                & compareTime.getDayOfMonth() <= t2.getDayOfMonth() & compareHour <= horaFinal);
+        if((compareTime.isAfter(t1) && compareTime.isBefore(t2))){
+            return true;
+        }
+        else if(compareTime.isEqual(t1) || compareTime.isEqual(t2)){
+                return compareHour >= horaInicial && compareHour <= horaFinal;
+            }
+        else{
+            return false;
+        }
         
     }
     
@@ -489,8 +517,11 @@ public class Sistema {
         for (Cliente c : clientes) {
             if (c.getCpf().equals(cpf)) {
                 for(Pedidos p: pedidos){
-                    if(p.getCpf().equals(cpf)){
-                        pedidosCliente.add(p);
+                        if(p.getCpf().equals(cpf)){
+                            if(filterDate(date1, date2,hora1,hora2, 
+                                p.getDataPedido(), p.getHorarioPedido())){
+                                pedidosCliente.add(p);
+                        }
                     }
                 }
                 break;
@@ -510,7 +541,7 @@ public class Sistema {
      * @return retorna a array com a média e o desvio padrão, respectivamente
      * @throws IOException 
      */
-    public double[] getEstatistica(String date1, String date2, int hora1, int hora2) throws IOException{
+    public float[] getEstatistica(String date1, String date2, int hora1, int hora2) throws IOException{
         ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
         Iterator<Pedidos> allPedidos = pedidos.iterator();
         ArrayList<Float> valores = new ArrayList<>();
@@ -520,8 +551,10 @@ public class Sistema {
      
         while (allPedidos.hasNext()) {
             Pedidos p = allPedidos.next();
-            if(filterDate(date1, date2, hora1, hora2, p.getDataPedido(), p.getHorarioPedido())){
-                valores.add(p.getValorTotal());
+            valores.add(p.getValorTotal());
+            if(filterDate(date1, date2,hora1,hora2, 
+                                p.getDataPedido(), p.getHorarioPedido())){
+                System.out.println(p.getValorTotal());
                 mean += p.getValorTotal();
             }
         }
@@ -530,7 +563,27 @@ public class Sistema {
             desvioPadrao = (float)Math.pow((v-mean),2);
         }
         desvioPadrao = desvioPadrao/(valores.size()-1);
-        double[] dados = {mean, desvioPadrao};
+        float[] dados = {mean, desvioPadrao};
         return dados;
+    }
+    
+    /**
+     * Salva um extrato gerado no BD
+     * @param e objeto extrato
+     * @throws IOException 
+     */
+    public void gerarExtrato(Extrato e) throws IOException{
+        e.setId(defIdUnico(Pedidos.class.getName()));
+        connectionExtrato.dump(e, connectionExtrato.getPathExtratos());
+    }
+    
+    public Extrato getExtrato(int id) throws IOException{
+        ArrayList<Extrato> extratos = connectionExtrato.dadosJson(connectionExtrato.getPathExtratos(), Extrato[].class);
+        for(Extrato e: extratos){
+            if(id == e.getId()){
+                return e;
+            }
+        }
+        return null;
     }
 }
