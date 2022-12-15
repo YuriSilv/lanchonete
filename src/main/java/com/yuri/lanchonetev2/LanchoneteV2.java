@@ -1,13 +1,11 @@
-
 package com.yuri.lanchonetev2;
-
-import com.yuri.sistema.Sistema;
+import com.yuri.view.TelaLogin;
 import java.io.IOException;
 
 public class LanchoneteV2 {
 
     public static void main(String[] args) throws IOException {
-        //Sistema s1 = new Sistema();
-        //s1.CadastrarEstaticoColaborador();
+        TelaLogin start = new TelaLogin();
+        start.setVisible(true);
     }
 }

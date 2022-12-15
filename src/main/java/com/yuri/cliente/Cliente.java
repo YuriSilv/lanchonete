@@ -1,7 +1,7 @@
 package com.yuri.cliente;
 import com.yuri.empregados.Usuario;
 
-public class Cliente extends Usuario implements Comparable{
+public class Cliente extends Usuario implements Comparable<Cliente>{
     
     private String telefone;
     private String endereco;
@@ -74,7 +74,7 @@ public class Cliente extends Usuario implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int compareTo(Cliente c) {
+        return getNome().compareTo(c.getNome());  
     }
 }

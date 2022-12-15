@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import org.json.JSONArray;
 
 public class Connection <T>{
@@ -71,6 +72,7 @@ public class Connection <T>{
     /**
      * A função dados Json irá ler os dados do json.
      * @param path define o caminho do json
+     * @param classType define o tipo da classe
      * @return retornar uma ArrayList com objetos do tipo especifíco que o json armazena.
      * @throws IOException 
      */

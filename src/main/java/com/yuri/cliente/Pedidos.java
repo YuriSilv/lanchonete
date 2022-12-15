@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.time.LocalTime;
 
-public class Pedidos {
+public class Pedidos implements Comparable<Pedidos>{
     
     private ArrayList<Produto> produtos = new ArrayList<>();
     private String dataPedido;
@@ -161,5 +161,18 @@ public class Pedidos {
     @Override
     public String toString() {
         return "Pedidos{" + "produtos=" + produtos + ", dataPedido=" + dataPedido + ", status=" + status + ", cpf=" + cpf + ", valorTotal=" + valorTotal + ", horarioEntrega=" + horarioEntrega + ", horarioPedido=" + horarioPedido + ", id=" + id + '}';
+    }
+
+    @Override
+    public int compareTo(Pedidos p) {
+        if(this.valorTotal > p.getValorTotal()){
+            return 1;
+        }
+        else if(this.valorTotal < p.getValorTotal()){
+            return -1;
+        }
+        else{
+            return 0;
+        }
     }
 }

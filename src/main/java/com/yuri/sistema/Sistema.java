@@ -5,6 +5,7 @@ import com.yuri.empregados.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class Sistema {
@@ -15,7 +16,7 @@ public class Sistema {
     private final Connection<Cliente> connectionCliente = new Connection<>();
     private final Connection<Extrato> connectionExtrato = new Connection<>();
     protected int contadorCliente;
-    
+    private boolean isAdm;
     Funcionario funcionarios[] = new Funcionario[15];
     
     String nomes[] = {"Vicente Pires", "Davi Moreira", "Daniela Pires", "Emanuelly Aragão", "Mirella da Cunha",
@@ -39,11 +40,23 @@ public class Sistema {
         }
     }
     
+    /**
+     * Permite logar no sistema e setar se é um ADM ou funcionário usando o sistema
+     * @param userName nome de usuário(cpf)
+     * @param senha senha
+     * @return se os dados estiverem corretos, retorna true
+     * @throws IOException 
+     */
     public boolean logar(String userName, String senha) throws IOException{
         Funcionario[] funcionarios = listarEmpregados();
         
         for(int i = 0; i < funcionarios.length; i++){
             if(funcionarios[i].getCpf().equals(userName) && funcionarios[i].getSenha().equals(senha)){
+                if(funcionarios[i].getIsAdm()){
+                    setIsAdm(true);
+                }else{
+                    setIsAdm(false);
+                }
                 return true;
             }
         }
@@ -121,6 +134,7 @@ public class Sistema {
      */
     public Cliente[] listarClientes() throws IOException{
         ArrayList<Cliente> clientes = connectionCliente.dadosJson(connectionCliente.getPathClinte(), Cliente[].class);
+        Collections.sort(clientes);
         Cliente[] dados = new Cliente[clientes.size()];
         dados = clientes.toArray(dados);
         return dados;
@@ -134,7 +148,7 @@ public class Sistema {
      */
     public Cliente pesquisarCliente(String cpf) throws IOException{
         ArrayList<Cliente> clientes = connectionCliente.dadosJson(connectionCliente.getPathClinte(), Cliente[].class);
-        
+        Collections.sort(clientes);
         for(Cliente c: clientes){
             if(cpf.equals(c.getCpf())){
                 return c;
@@ -440,6 +454,7 @@ public class Sistema {
      */
     public Pedidos[] listarPedidos() throws IOException{
         ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
+        Collections.sort(pedidos);
         Pedidos[] dados = new Pedidos[pedidos.size()];
         dados = pedidos.toArray(dados);
         return dados;
@@ -486,7 +501,7 @@ public class Sistema {
         ArrayList<Pedidos> pedidos = connectionPedidos.dadosJson(connectionPedidos.getPathPedidos(), Pedidos[].class);
         Iterator<Pedidos> allPedidos = pedidos.iterator();
         ArrayList<Produto> produtos = new ArrayList<>();
-
+        Collections.sort(pedidos);
         while (allPedidos.hasNext()) {
             Pedidos p = allPedidos.next();
             if (p.getCpf().equals(cpf)){
@@ -577,7 +592,7 @@ public class Sistema {
         connectionExtrato.dump(e, connectionExtrato.getPathExtratos());
     }
     
-    public Extrato getExtrato(int id) throws IOException{
+        public Extrato getExtrato(int id) throws IOException{
         ArrayList<Extrato> extratos = connectionExtrato.dadosJson(connectionExtrato.getPathExtratos(), Extrato[].class);
         for(Extrato e: extratos){
             if(id == e.getId()){
@@ -590,6 +605,14 @@ public class Sistema {
     @Override
     public String toString() {
         return "Sistema{" + "connectionAdmnistrador=" + connectionAdmnistrador + ", connectionFuncionario=" + connectionFuncionario + ", connectionProduto=" + connectionProduto + ", connectionPedidos=" + connectionPedidos + ", connectionCliente=" + connectionCliente + ", connectionExtrato=" + connectionExtrato + ", contadorCliente=" + contadorCliente + '}';
+    }
+
+    public boolean getIsAdm() {
+        return isAdm;
+    }
+
+    public void setIsAdm(boolean isAdm) {
+        this.isAdm = isAdm;
     }
     
     
