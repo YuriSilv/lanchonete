@@ -16,7 +16,7 @@ public class Sistema {
     private final Connection<Cliente> connectionCliente = new Connection<>();
     private final Connection<Extrato> connectionExtrato = new Connection<>();
     protected int contadorCliente;
-    private boolean isAdm;
+    private static boolean isAdm;
     Funcionario funcionarios[] = new Funcionario[15];
     
     String nomes[] = {"Vicente Pires", "Davi Moreira", "Daniela Pires", "Emanuelly Aragão", "Mirella da Cunha",
@@ -607,12 +607,12 @@ public class Sistema {
         return "Sistema{" + "connectionAdmnistrador=" + connectionAdmnistrador + ", connectionFuncionario=" + connectionFuncionario + ", connectionProduto=" + connectionProduto + ", connectionPedidos=" + connectionPedidos + ", connectionCliente=" + connectionCliente + ", connectionExtrato=" + connectionExtrato + ", contadorCliente=" + contadorCliente + '}';
     }
 
-    public boolean getIsAdm() {
+    public static boolean getIsAdm() {
         return isAdm;
     }
 
-    public void setIsAdm(boolean isAdm) {
-        this.isAdm = isAdm;
+    public static void setIsAdm(boolean isAdm) {
+        Sistema.isAdm = isAdm;
     }
     
     

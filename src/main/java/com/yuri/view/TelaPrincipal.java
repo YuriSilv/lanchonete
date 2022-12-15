@@ -44,6 +44,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         panelPrincipal = new javax.swing.JPanel();
+        padrãoPanel = new javax.swing.JPanel();
         cadastrarPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -101,7 +102,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         salvarEditarPedido = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
-        statusPedidoEditarCampo = new javax.swing.JTextField();
         salvarCpfClienteEditarPedidoCheckBox = new javax.swing.JCheckBox();
         salvarStatusEditarPedidoCheckBox = new javax.swing.JCheckBox();
         salvarHoraEntregaPedidoCheckBox = new javax.swing.JCheckBox();
@@ -109,6 +109,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         itensProdutosEditarPedido = new javax.swing.JList<>();
         salvarProdutosEditarPedidoCheckBox = new javax.swing.JCheckBox();
+        itensPedidoEditar = new javax.swing.JComboBox<>();
         removePedido = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -243,7 +244,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         gerarExtratoButton = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         textAreaExtrato = new javax.swing.JTextArea();
-        padrãoPanel = new javax.swing.JPanel();
         alterarSenhaFuncionarioPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel62 = new javax.swing.JLabel();
@@ -286,6 +286,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         panelPrincipal.setMaximumSize(new java.awt.Dimension(600, 400));
         panelPrincipal.setLayout(new java.awt.CardLayout());
+
+        padrãoPanel.setMaximumSize(new java.awt.Dimension(600, 400));
+
+        javax.swing.GroupLayout padrãoPanelLayout = new javax.swing.GroupLayout(padrãoPanel);
+        padrãoPanel.setLayout(padrãoPanelLayout);
+        padrãoPanelLayout.setHorizontalGroup(
+            padrãoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 746, Short.MAX_VALUE)
+        );
+        padrãoPanelLayout.setVerticalGroup(
+            padrãoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 842, Short.MAX_VALUE)
+        );
+
+        panelPrincipal.add(padrãoPanel, "card5");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -386,7 +401,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(cadastrarPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(402, Short.MAX_VALUE))
+                .addContainerGap(432, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(cadastrarPanel, "cadastrarTela");
@@ -447,7 +462,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(listarLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(listar, "listarTela");
@@ -597,7 +612,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(editarLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(384, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(editar, "editarTela");
@@ -687,7 +702,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(cadastraPedidoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(372, Short.MAX_VALUE))
+                .addContainerGap(402, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(cadastraPedido, "cadastrarPedidoTela");
@@ -725,12 +740,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         salvarHoraEntregaPedidoCheckBox.setText("Salvar Hora Entrega");
 
         jLabel53.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel53.setText("ID do produto");
+        jLabel53.setText("ID do pedido");
 
         itensProdutosEditarPedido.setModel(itensProdutosEmCadastroPedido());
         jScrollPane5.setViewportView(itensProdutosEditarPedido);
 
         salvarProdutosEditarPedidoCheckBox.setText("Salvar Produtos");
+
+        itensPedidoEditar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Em Preparo", "Pronto", "Em Rota", "Entregue", "Devolvido" }));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -751,24 +768,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(jLabel32))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(salvarProdutosEditarPedidoCheckBox)
+                            .addComponent(idPedidoEditarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addComponent(salvarEditarPedido))
                             .addGroup(jPanel12Layout.createSequentialGroup()
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(idPedidoEditarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addGap(109, 109, 109)
-                                        .addComponent(salvarEditarPedido))
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(horaEntregaEditarPedidoCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(statusPedidoEditarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(41, 41, 41)
-                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(salvarCpfClienteEditarPedidoCheckBox)
-                                            .addComponent(salvarHoraEntregaPedidoCheckBox)
-                                            .addComponent(salvarStatusEditarPedidoCheckBox)))
-                                    .addComponent(cpfClienteEditarPedidoCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(horaEntregaEditarPedidoCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(itensPedidoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(salvarCpfClienteEditarPedidoCheckBox)
+                                    .addComponent(salvarHoraEntregaPedidoCheckBox)
+                                    .addComponent(salvarStatusEditarPedidoCheckBox)))
+                            .addComponent(cpfClienteEditarPedidoCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(salvarProdutosEditarPedidoCheckBox))
+                        .addGap(0, 1, Short.MAX_VALUE))
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -798,9 +813,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarStatusEditarPedidoCheckBox)
-                    .addComponent(statusPedidoEditarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel52))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                    .addComponent(jLabel52)
+                    .addComponent(itensPedidoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
                     .addComponent(salvarProdutosEditarPedidoCheckBox))
@@ -822,7 +837,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(editPedidoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(editPedido, "editarPedidoTela");
@@ -888,7 +903,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(removePedidoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addContainerGap(575, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(removePedido, "removerPedidoTela");
@@ -949,7 +964,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(listaPedidosLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(listaPedidos, "listarPedidoTela");
@@ -1062,7 +1077,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrarFuncionarioPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addContainerGap(407, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(cadastrarFuncionarioPanel, "cadastrarTelaFuncionario");
@@ -1216,7 +1231,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(editarFuncionariosLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(384, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(editarFuncionarios, "editarFuncionarioTela");
@@ -1287,7 +1302,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(listarFuncionarioLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(listarFuncionario, "listarFuncionarioTela");
@@ -1353,7 +1368,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(removerFuncionarioPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addContainerGap(575, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(removerFuncionarioPanel, "removerTelaFuncionario");
@@ -1482,7 +1497,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(editarProdutoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(editarProduto, "editarProdutoTela");
@@ -1580,7 +1595,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(cadastrarProdutoPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(374, Short.MAX_VALUE))
+                .addContainerGap(404, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(cadastrarProdutoPanel, "cadastrarProdutoTela");
@@ -1646,7 +1661,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(removerProdutoPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addContainerGap(575, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(removerProdutoPanel, "removerProdutoTela");
@@ -1715,7 +1730,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(listarProdutosPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(listarProdutosPanel, "listarProdutosTela");
@@ -1929,7 +1944,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel61)))
                 .addContainerGap(167, Short.MAX_VALUE))
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(269, 269, 269)
+                .addGap(330, 330, 330)
                 .addComponent(pesquisarPedidosButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1971,7 +1986,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             estatisticaVendaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(estatisticaVendaPanelLayout.createSequentialGroup()
-                .addGap(196, 196, 196)
+                .addGap(252, 252, 252)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1980,9 +1995,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(estatisticaVendaPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76)
+                .addGap(68, 68, 68)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(estatisticaVendaPanel, "estatisticaProdutoTela");
@@ -2049,7 +2064,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(removerClientePanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addContainerGap(575, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(removerClientePanel, "removerTela");
@@ -2121,25 +2136,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(extratoPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(336, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(extratoPanel, "extratoTela");
-
-        padrãoPanel.setMaximumSize(new java.awt.Dimension(600, 400));
-
-        javax.swing.GroupLayout padrãoPanelLayout = new javax.swing.GroupLayout(padrãoPanel);
-        padrãoPanel.setLayout(padrãoPanelLayout);
-        padrãoPanelLayout.setHorizontalGroup(
-            padrãoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 746, Short.MAX_VALUE)
-        );
-        padrãoPanelLayout.setVerticalGroup(
-            padrãoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 812, Short.MAX_VALUE)
-        );
-
-        panelPrincipal.add(padrãoPanel, "card5");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2209,7 +2209,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(alterarSenhaFuncionarioPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(544, Short.MAX_VALUE))
+                .addContainerGap(574, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(alterarSenhaFuncionarioPanel, "alterarSenhaFuncTela");
@@ -2442,6 +2442,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void listarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarClienteActionPerformed
         CardLayout cl = (CardLayout) panelPrincipal.getLayout();
         cl.show(panelPrincipal, "listarTela");
+        DefaultTableModel dtmClientes = (DefaultTableModel) tabelaClientes.getModel();
+        dtmClientes.getDataVector().removeAllElements();
     }//GEN-LAST:event_listarClienteActionPerformed
 
     private void editarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteActionPerformed
@@ -2474,6 +2476,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void listarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarPedidosActionPerformed
         CardLayout cl = (CardLayout) panelPrincipal.getLayout();
         cl.show(panelPrincipal, "listarPedidoTela");
+        DefaultTableModel dtmPedidos = (DefaultTableModel) pedidosTabela.getModel();
+        dtmPedidos.getDataVector().removeAllElements();
     }//GEN-LAST:event_listarPedidosActionPerformed
 
     private void removerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerPedidoActionPerformed
@@ -2574,6 +2578,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void listarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarFuncionariosActionPerformed
         CardLayout cl = (CardLayout) panelPrincipal.getLayout();
         cl.show(panelPrincipal, "listarFuncionarioTela");
+        DefaultTableModel dtmFuncionarios = (DefaultTableModel) tabelaFuncionarios.getModel();
+        dtmFuncionarios.getDataVector().removeAllElements();
     }//GEN-LAST:event_listarFuncionariosActionPerformed
 
     private void cadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarFuncionarioActionPerformed
@@ -2598,6 +2604,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void listarProdutosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProdutosMenuActionPerformed
         CardLayout cl = (CardLayout) panelPrincipal.getLayout();
         cl.show(panelPrincipal, "listarProdutosTela");
+        DefaultTableModel dtmProdutos = (DefaultTableModel) tabelaProduto.getModel();
+        dtmProdutos.getDataVector().removeAllElements();
     }//GEN-LAST:event_listarProdutosMenuActionPerformed
 
     private void cadastrarProdutoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarProdutoMenuActionPerformed
@@ -2617,6 +2625,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void pesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarPedidoActionPerformed
         CardLayout cl = (CardLayout) panelPrincipal.getLayout();
         cl.show(panelPrincipal, "pesquisarProdutoTela");
+        DefaultTableModel dtmPesquisar = (DefaultTableModel) pedidosTabelaPesquisar.getModel();
+        dtmPesquisar.getDataVector().removeAllElements();
     }//GEN-LAST:event_pesquisarPedidoActionPerformed
 
     private void estatisticaPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estatisticaPedidoActionPerformed
@@ -2851,6 +2861,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     nomeProdutos.toString(), dados[i].getValorTotal(), dados[i].getId(),
                     dados[i].getHorarioEntrega(), dados[i].getHorarioPedido()};
                 dtmClientes.addRow(dadoRow);
+                nomeProdutos.clear();
             }
 
         } catch (IOException ex) {
@@ -2879,7 +2890,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         if (salvarStatusEditarPedidoCheckBox.isSelected()) {
             try {
-                sistemaPrincipal.editarPedido(Integer.parseInt(idPedidoEditarCampo.getText()), "status", statusPedidoEditarCampo.getText());
+                sistemaPrincipal.editarPedido(Integer.parseInt(idPedidoEditarCampo.getText()), "status", itensPedidoEditar.getSelectedItem().toString());
                 JOptionPane.showMessageDialog(this, "Status editado com sucesso");
             } catch (IOException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -2922,6 +2933,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                     dados[i].getHorarioEntrega(), dados[i].getHorarioPedido(), c.getTelefone(),
                                     c.getEndereco(), c.getNome()};
                 dtmClientes.addRow(dadoRow);
+                nomeProdutos.clear();
             }
 
         } catch (IOException ex) {
@@ -3005,9 +3017,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     
     private void whoLogged(){
-        if(sistemaPrincipal.getIsAdm()){
+        if(sistemaPrincipal.getIsAdm()){       
+            optionMenuFuncionarios.setVisible(true);
+            optionMenuCliente.setVisible(true);
+            optionMenuProdutos.setVisible(true);
             alterarSenhaFuncMenu.setVisible(false);
         }else{
+            alterarSenhaFuncMenu.setVisible(true);
             optionMenuFuncionarios.setVisible(false);
             optionMenuCliente.setVisible(false);
             optionMenuProdutos.setVisible(false);
@@ -3112,6 +3128,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField idProdutoEditarCampo;
     private javax.swing.JCheckBox isAdmCheckBox;
     private javax.swing.JCheckBox isAdmCheckBoxFuncionario;
+    private javax.swing.JComboBox<String> itensPedidoEditar;
     private javax.swing.JList<String> itensProdutosCadastroPedido;
     private javax.swing.JList<String> itensProdutosEditarPedido;
     private javax.swing.JLabel jLabel1;
@@ -3276,7 +3293,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField senhaCadastroFuncionario;
     private javax.swing.JCheckBox senhaCheckBoxFuncionario;
     private javax.swing.JTextField senhaEditarFuncionario;
-    private javax.swing.JTextField statusPedidoEditarCampo;
     private javax.swing.JTable tabelaClientes;
     private javax.swing.JTable tabelaFuncionarios;
     private javax.swing.JTable tabelaProduto;
